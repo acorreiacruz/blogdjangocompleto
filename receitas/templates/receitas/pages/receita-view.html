@@ -1,0 +1,13 @@
+{% extends 'global/base.html' %}
+
+{% block title %} {{ receita.title }} | {% endblock title %}
+
+{% block content %}
+<div class="main-content main-content-detail container">
+    {% include 'receitas/partials/receita.html' %}
+</div>
+{% endblock content %}    
+
+{% comment %}
+ Aqui é uma das duas principais páginas do site, aqui é a página renderizada quando você clica no "ver mais" da home, é a página com a url /receitas/id/
+{% endcomment %}

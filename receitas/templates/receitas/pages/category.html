@@ -1,0 +1,23 @@
+{% extends 'global/base.html' %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+
+<div class="main-content main-content-list container">
+
+{% comment %}
+Na home page do nosso site ocorre uma ListView , nesse caso utilizando uma function based view. Essa tem como função listar todas as instâncias do banco de dados. Logo nos acessamos esse banco de dados pela variável receitas que está guardando todos os objetos. A partir disso usamos um loop for para iterar sobre cada receita em receitas e carregamos o parcial que já esta pronto para isso. Já acessamos a variável receita no parcial receitas
+{% endcomment %}
+
+{% for receita in receitas %}
+    {% comment %} 
+    A cada ciclo do laço a variável receita é  passada para o template receita, e lembrando que receitas aqui é um dicionário e receita é a chave do dicionário
+    {% endcomment %}
+    {% include 'receitas/partials/receita.html' %}
+
+{% endfor %}
+
+</div>
+
+{% endblock content %}

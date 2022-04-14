@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    {% include 'receitas/partials/head.html' %}
+    <title> {% block title %}Home|{% endblock title %}Receitas</title>
+
+</head>
+
+<body>
+    {% include 'receitas/partials/header.html' %} 
+    {% include 'receitas/partials/search.html' %}
+
+    <main class="main-content-container">
+        {% include 'receitas/partials/messages.html' %}
+        {% block content %}{% endblock content %} 
+        {% include 'receitas/partials/pagination.html' %}
+    </main>
+    {% include 'receitas/partials/footer.html' %}
+    
+</body>
+</html>
+
+{% comment %}
+ Aqui é o template base, ou seja, um template que possui aspectos comuns entre todos os demais templates utilizados no projeto, serve de base para reaproveitar código, ele será muito utilizado em template/receitas/pages/home/receitas. Nele os templates filhos podem sobscrever com seus conteúdos onde há a tag {% block nome %} Aqui o conteúdo do filho {% endblock nome %}. Lembrando também que os filhos devem utilizar a tag {% extends 'global/base.html' %}
+{% endcomment %}

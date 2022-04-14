@@ -1,0 +1,94 @@
+<div class="receita-list-item receita">
+{% comment %}
+    Lembrando que quando uma imagem de um site é clicada ele deve ser aberta , ela deve ser servida, é ai que entra a função settings lá do urls do projeto, ela retorna um padrão de url para servir arquivos quando no modo DEBUG. Logo o receita.cover.url é essa url
+{% endcomment %}
+    {% if receita.cover %}
+        <div class="receita-cover">
+            <a href="{% url 'receitas:receita' receita.id %}">
+            <img src="{{ receita.cover.url }}" alt="Recipe Image">
+        </a>
+        </div>
+    {% endif %}
+
+    <div class="receita-title-container">
+        <h2 class="recipe-title">
+            <a href="{% url 'receitas:receita' receita.id %}">
+                {{ receita.title }}
+            </a>
+        </h2>
+    </div>
+
+    <div class="receita-author">
+
+        {% if receita.author is not None %}
+            <span class="receita-author-item">
+                <i class="fas fa-user"></i>
+                {% if receita.author.first_name %}
+                    {{ receita.author.first_name }} 
+                {% else %}
+                {{ receita.author.last_name }}
+                {% endif %}
+            </span>
+        {% else %}
+            Desconhecido
+        {% endif %}
+
+        <span class="receita-author-item">
+            <i class="fas fa-calendar-alt"></i>
+            {{ receita.created_at | date:"d/m/Y" }} às {{ receita.created_at | date:"H:i" }}
+        </span>
+
+        {% if receita.category is not None %}
+            <span class="receita-author-item">
+                <a href="{% url 'receitas:category' receita.category.id %}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>{{ receita.category.name }}</span>
+                </a>
+            </span>
+        {% endif %}
+
+    </div>
+
+    <div class="receita-content">
+        <p>{{ receita.description}}</p>
+    </div>
+
+    <div class="receita-meta-container">
+        <div class="receita-meta receita-preparation">
+            <h3 class="receita-meta-title"><i class="fas fa-stopwatch"></i> Preparo</h3>
+            <div class="receita-meta-text">
+                {{ receita.preparation_time}} {{ receita.preparation_time_unit}}
+            </div>
+        </div>
+        <div class="receita-meta receita-servings">
+            <h3 class="receita-meta-title"><i class="fas fa-pizza-slice"></i> Porções</h3>
+            <div class="receita-meta-text">
+                {{ receita.servings}} {{ receita.servings_units}}
+            </div>
+        </div>
+    </div>
+
+    {% if not is_detail_page %}
+        <footer class="receita-footer">
+            <a class="receita-read-more button button-dark button-full-width" href="{% url 'receitas:receita' receita.id %}">
+                <i class="fas fa-eye"></i>
+                <span>Ver mais...</span>
+            </a>
+        </footer>
+    {% else %}
+        <div class="preparation-steps">
+            {% if receita.preparation_step_is_html %}
+                {{ receita.preparation_step | safe }}
+            {% else %}
+                    {{ receita.preparation_step }}
+            {% endif %}
+        </div>
+    {% endif %}
+{% comment %}
+ O filtro safe diz pro Django que o dono do site está garantindo que o html passado ali para carregar é seguro. Ou seja , que o adiministrador verificou isso     
+{% endcomment %}
+</div>
+
+{% comment %}
+    O último if aqui nessa página é para testar se a flag é True, logo é a página de detalhes da receita e não vai precisar mostrar o botão ver mais. Logo se is_detail_page não for True , você carrega o botão ver mais caso não seja ele some, e aparece os elementos da página de detalhes
+{% endcomment %}
