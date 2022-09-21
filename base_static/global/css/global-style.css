@@ -1,0 +1,358 @@
+:root {
+    --color-primary: #269fe6;
+    --color-primary-hover: #2086c2;
+    --color-primary-dark: #13141f;
+    --color-primary-dark-hover: #212336;
+    --color-primary-light: #d4ecfa;
+    --color-primary-light-hover: #bdd8e7;
+
+    --color-white: #fff;
+    --color-black: #000;
+
+    --color-dark-text: #444;
+    --color-info-light: #cce5ff;
+    --color-debug-light: #cce5ff;
+    --color-success-light: #d4edda;
+    --color-alert-light: #fff3cd;
+    --color-warning-light: #fff3cd;
+    --color-error-light: #f8d7da;
+
+    --color-info-dark: #4d86c4;
+    --color-debug-dark: #4d86c4;
+    --color-success-dark: #4a9c5d;
+    --color-alert-dark: #927f40;
+    --color-warning-dark: #927f40;
+    --color-error-dark: #da525d;
+
+    --color-gray-0: #f9f9f9;
+    --color-gray-1: #e0e0e0;
+    --color-gray-2: #c7c7c7;
+    --color-gray-3: #aeaeae;
+    --color-gray-4: #959595;
+    --color-gray-5: #7d7d7d;
+    --color-gray-6: #646464;
+    --color-gray-7: #4b4b4b;
+    --color-gray-8: #323232;
+    --color-gray-9: #191919;
+
+    --font-primary: sans-serif;
+    --font-headings: 'Roboto Slab', serif;
+
+    --spacing-gutter-medium: 3rem;
+    --spacing-gutter-large: 4rem;
+ }
+
+ *{
+    padding: 0;
+    margin: 0;
+    /*Essa propriedade faz com que o padding e a borda sejam incluídos juntos com o tamanho do conteúdo, e não mais acrescentados*/
+    box-sizing: border-box;
+ }
+
+ html{
+    /*Isso é para fazer com que em seja quase compatível com px*/
+    font-size: 62.5%;
+ }
+
+ body{
+    /*1.6 rem = 16px*/
+    font-size: 1.6rem;
+    font-family: var(--font-primary);
+    background-color: var(--color-gray-1);
+    color: var(--color-dark-text);
+ }
+
+ h1,h2,h3,h4,h5{
+    font-family: var(--font-headings);
+ }
+
+ .container {
+    max-width: 144rem;
+    margin: 0 auto;
+    padding: 3rem;
+ }
+
+ .main-header-container{
+    background-color: var(--color-primary-dark);
+ }
+
+ .main-logo{
+    font-size: 3.5rem;
+    text-decoration: none;
+    color: var(--color-white);
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    /*O tamanho da main-logo será do tamanho do seu conteúdo*/
+    width:fit-content;
+    margin: 0 auto;
+ }
+
+ .main-logo-icon{
+    margin-right: 2rem;
+ }
+
+ .search-form{
+    border: .2rem solid var(--color-primary-dark);
+    max-width: 64rem;
+    margin: 0 auto;
+    border-radius: .5rem;
+    position: relative; /*Faz os block filhos usarem position em relação a ele o pai*/
+    transition: all 300ms ease-in-out;
+ }
+
+ .search-input,
+ .search-button{
+    border: none;
+    background: none;
+    outline: none;
+    padding: 1rem;
+    transition: all 300ms ease-in-out;
+ }
+
+ .search-input{
+    width: 100%; /*Agora ele passa a ocupar toda a largura do container pai*/
+    padding-right: 3rem; /*Para o texto não ficar atrás do botão de pesquisa*/
+ }
+
+ .search-button{
+    position: absolute;
+    top: 0; /*Fazendo ele colar no topo da div pai*/
+    right: 0; /*Fazendo ele colar na direita da div pai*/
+ }
+
+ .search-button:focus{
+    outline: 1px solid var(--color-primary);
+    background-color: rgba(0,0,0,.05);
+ }
+
+ /*Aplicando estilo caso algo dentro esteja em foco, nesse caso o objetivo é o input*/
+ .search-form:focus-within{
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+ }
+
+ /*Fazendo com que  botão também seja destacado*/
+ .search-form:focus-within .search-button{
+    border-color: var(--color-primary);
+ }
+
+ .main-content{
+    padding-top: 0;
+ }
+
+ .main-content-list{
+    /*automatiamente todos os filhos se tornam grid*/
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(340px,1fr));
+    gap: var(--spacing-gutter-large);
+ }
+
+ .receita{
+    background-color: white;
+    box-shadow: -5px 5px 10px rgba(0,0,0,.2);
+    transition: all 300ms ease-in-out;
+    transform: scale(1);
+ }
+
+ .receita img{
+    max-width: 100%;
+ }
+
+ .receita-list-item{
+    max-width:640px;
+    height: fit-content;
+ }
+
+ .receita-list-item:hover{
+    transform: scale(1.02);
+    box-shadow: -8px 8px 18px rgba(0,0,0,.25);
+
+ }
+
+ .receita-title-container {
+    padding: var(--spacing-gutter-medium);
+    padding-bottom: 2rem;
+ }
+
+ .receita-title-container a {
+    text-decoration: none;
+    color: var(--color-primary-dark)
+ }
+
+ .receita-author {
+    padding: 0 var(--spacing-gutter-medium);
+ }
+
+ .receita-content {
+    padding: var(--spacing-gutter-medium);
+    padding-top: 2rem;
+ }
+
+ .receita-author-item {
+    color: var(--color-gray-4);
+    margin-right: 1rem;
+    font-style: italic;
+    font-size: 1.4rem;
+ }
+
+ .receita-author a {
+    color: var(--color-primary);
+    transition: all 300ms ease-in-out;
+    text-decoration: none;
+ }
+
+ .receita-author a:hover {
+    color: var(--color-primary-dark);
+ }
+
+ .receita-meta-container{
+    display: flex;
+    flex-flow: row wrap;
+    padding: var(--spacing-gutter-medium);
+    background-color: var(--color-gray-1);
+ }
+
+ .receita-meta {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-shrink: 1;
+    flex-grow: 1;
+    text-align: center;
+ }
+
+ .receita-meta-title {
+    font-size: 1.6rem;
+ }
+
+ .receita-footer a {
+    background: var(--color-primary-dark);
+    display: block;
+    color: var(--color-white);
+    text-decoration: none;
+    text-align: center;
+    padding: 1.5rem var(--spacing-gutter-medium);
+    transition: all 300ms ease-in-out;
+ }
+
+ .receita-footer a:hover {
+    filter: brightness(2);
+ }
+
+ .main-content-detail .receita-list-item{
+    max-width: 84rem;
+    margin: 0 auto;
+ }
+
+ .main-content-detail .receita-list-item:hover{
+    transform: scale(1);
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.2);
+ }
+
+ .preparation-steps{
+    padding: var(--spacing-gutter-medium);
+    color: #000;
+ }
+
+ .main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-primary-dark);
+    color: var(--color-white);
+    padding: var(--spacing-gutter-large);
+ }
+
+ .main-footer a {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: all 300ms ease-in-out;
+ }
+
+ .main-footer a:hover {
+    filter: brightness(.8);
+ }
+
+ /* Generics */
+
+ .center{
+    text-align: center;
+ }
+
+
+ /* Form */
+
+.form-content{
+    margin: 0px auto;
+    max-width: 640px;
+}
+
+.form-content-grid{
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-content-grid label{
+   display: block;
+   font-weight: bold;
+}
+
+.form-content-grid input{
+   font-size: 20px;
+   border: 1px solid black;
+   border-radius: 4px;
+   padding: 5px 10px;
+   margin-top: 5px;
+   margin-bottom: 5px;
+   outline: none;
+}
+
+.form-content-grid input:focus{
+   border: 1px solid blue;
+}
+
+.form-content button {
+   font-size: 20px;
+   padding: 5px 10px;
+   position: relative;
+   border: 1px solid rgb(124, 124, 124);
+   border-radius: 4px;
+}
+
+.form-content button:active{
+   top: 2px;
+   border-color: #000;
+}
+
+.errorlist{
+   list-style: none;
+   margin-top: 10px;
+   color: red;
+}
+
+
+.message{
+   margin: 0px auto;
+   max-width: 640px;
+   border-radius: 4px;
+   border: 3px solid black;
+   padding: 8px 0px 8px 0px;
+   font-size: 18px;
+   font-weight: bold;
+   text-align: center;
+}
+
+.message-success{
+   border-color: blue;
+   color: blue;
+   background-color: rgb(143, 143, 255);
+}
+
+.message-error{
+   border-color: rgb(255, 0, 0);
+   color: rgb(255, 0, 0);
+   background-color: rgb(255, 143, 143);
+}
