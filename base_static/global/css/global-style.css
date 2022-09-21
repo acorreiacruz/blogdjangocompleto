@@ -356,3 +356,41 @@
    color: rgb(255, 0, 0);
    background-color: rgb(255, 143, 143);
 }
+
+/* Pagination style */
+
+.pagination-content{
+   display: flex;
+   flex-direction: row;
+}
+
+.pagination-content .page-link{
+   position: relative;
+   display: block;
+   width: fit-content;
+   text-decoration: none;
+   margin-right: 8px;
+   font-size: 15px;
+   padding: 5px 10px;
+   color: white;
+   background-color: var(--color-primary-dark);
+}
+
+.pagination-content span{
+   font-size: 15px;
+   font-weight: bold;
+   margin-right: 8px;
+}
+
+.pagination-content .page-link:active{
+   top: 1px;
+}
+
+.pagination-content .page-link:hover{
+   background-color:black;
+}
+
+.pagination-content .current-page{
+   color: #269fe6;
+   font-weight: bold;
+}
