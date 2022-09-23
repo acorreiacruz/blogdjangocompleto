@@ -147,7 +147,6 @@ def dashboard_create_recipe(request):
     if form.is_valid():
         receita = form.save(commit=False)
 
-        receita.slug = f"slug-da-receita-de-id-{receita.id}"
         receita.author = request.user
         receita.is_published = False
         receita.preparation_step_is_html = False
