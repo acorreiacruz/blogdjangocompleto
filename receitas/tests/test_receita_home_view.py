@@ -5,8 +5,8 @@ from .test_receita_base import ReceitasTestBase
 class HomeViewTest(ReceitasTestBase):
 
     def test_receita_home_view_is_correct(self):
-        resolver_object = resolve(reverse('receitas:home')) 
-        self.assertIs(resolver_object.func,views.home)
+        resolver_object = resolve(reverse('receitas:home'))
+        self.assertIs(resolver_object.func.view_class, views.ReceitaListViewHome)
 
     def test_receita_home_view_status_code_is_200(self):
         response = self.client.get(reverse('receitas:home'))

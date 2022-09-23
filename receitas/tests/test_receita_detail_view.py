@@ -6,8 +6,8 @@ class DetailViewTest(ReceitasTestBase):
 
     def test_receitas_detail_view_is_correct(self):
         resolver_object = resolve(reverse('receitas:receita',kwargs={'id':1}))
-        self.assertIs(resolver_object.func,views.receita)
-    
+        self.assertIs(resolver_object.func.view_class,views.ReceitaDetailViewReceita)
+
     def test_receita_detail_view_status_code_is_404_if_not_receitas(self):
         response = self.client.get(reverse('receitas:receita',kwargs={'id':100}))
         self.assertEqual(response.status_code,404)
@@ -23,4 +23,3 @@ class DetailViewTest(ReceitasTestBase):
         self.assertEqual(response.status_code,404)
 
 
-   

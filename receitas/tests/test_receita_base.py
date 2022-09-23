@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Classe que herda de TestCase e que se extende para ReceitasViewsTest, feita com o intuito de guardar as configurações para os teste, o setup e o teardown
 
 class ReceitasTestBase(TestCase):
-    
+
     def setUp(self) -> None:
         return super().setUp()
 
@@ -18,7 +18,7 @@ class ReceitasTestBase(TestCase):
     username = "username",
     password = "qaz321",
     email = "username@email.com"):
-        
+
 
         return  User.objects.create_user(
             first_name = first_name,
@@ -28,8 +28,8 @@ class ReceitasTestBase(TestCase):
             email = email)
 
     def make_receita(self,
-    category = None,
-    author = None,
+    category_data = None,
+    author_data = None,
     title = "Título da Receita",
     description = "Descrição da Receita",
     slug = "slug-da-receita",
@@ -40,10 +40,10 @@ class ReceitasTestBase(TestCase):
     preparation_step = 'Preparação da Receita',
     preparation_step_is_html = False,is_published = True):
 
-        if category is None:
+        if category_data is None:
             category_data = {}
-        
-        if author is None:
+
+        if author_data is None:
             author_data = {}
 
         return Receitas.objects.create(
@@ -58,4 +58,4 @@ class ReceitasTestBase(TestCase):
             servings_unit = servings_unit,
             preparation_step = preparation_step,
             preparation_step_is_html = preparation_step_is_html,
-            is_published = is_published)  
+            is_published = is_published)

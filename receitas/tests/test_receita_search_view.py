@@ -10,7 +10,7 @@ class SearchViewTest(ReceitasTestBase):
 
     def test_receita_search_view_function_is_correct(self):
         resolver_object = resolve(reverse('receitas:search'))
-        self.assertIs(resolver_object.func,views.search)
+        self.assertIs(resolver_object.func.view_class,views.ReceitaListViewSearch)
 
     def test_receita_search_view_loads_correct_template(self):
         response = self.client.get(reverse('receitas:search')+'?search=teste')
@@ -38,8 +38,8 @@ class SearchViewTest(ReceitasTestBase):
 
         receita1 = self.make_receita(
             title = title1,
-            slug = 'slug-receita-1',  
-            author_data = {'username':'user1'}          
+            slug = 'slug-receita-1',
+            author_data = {'username':'user1'}
         )
 
         receita2 = self.make_receita(
@@ -50,16 +50,16 @@ class SearchViewTest(ReceitasTestBase):
 
         response1 = self.client.get(f'{url}?search={title1}')
         response2 = self.client.get(f'{url}?search={title2}')
-        response_both = self.client.get(f'{url}?search=this')
+        response_both = self.client.get(f'{url}?search=esta')
 
         # Receita é passa para a view pelo context, esse é acessado no response pelo context, logo retorna uma QueryDict
-        self.assertIn(receita1,response1.context['receitas'])
-        self.assertIn(receita2,response2.context['receitas'])
+        self.assertIn(receita1,response1.context.get('receitas'))
+        self.assertIn(receita2,response2.context.get('receitas'))
 
-        self.assertNotIn(receita1,response2.context['receitas'])
-        self.assertNotIn(receita2,response1.context['receitas'])
+        self.assertNotIn(receita1,response2.context.get('receitas'))
+        self.assertNotIn(receita2,response1.context.get('receitas'))
 
-        self.assertIn(response1,response_both.context['receitas'])
-        self.assertIn(response2,response_both.context['receitas'])
+        self.assertIn(response1,response_both.context.get('receitas'))
+        self.assertIn(response2,response_both.context.get('receitas'))
 
 
