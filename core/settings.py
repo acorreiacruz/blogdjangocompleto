@@ -2,8 +2,12 @@ import os
 from pathlib import Path
 from django.contrib.messages import constants
 from dotenv import load_dotenv
+import mimetypes
 
 load_dotenv()
+
+# Solving the problem of not showing Django Debug Toolbar
+mimetypes.add_type("application/javascript", ".js", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,6 +22,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
+
 ALLOWED_HOSTS = []
 
 
@@ -30,11 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Apps terceiros
+    'debug_toolbar',
     # Meus apps
     'receitas',
     'autores',
-    # Apps terceiros
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +144,5 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+
