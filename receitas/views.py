@@ -1,3 +1,4 @@
+from django.views.generic import ListView
 from django.http import Http404
 from django.shortcuts import render , get_list_or_404 , get_object_or_404
 from .models import Receitas
@@ -7,19 +8,39 @@ import os
 
 PER_PAGE = int(os.environ.get('PER_PAGE',4))
 
-def home(request):
 
-    receitas = Receitas.objects.filter(is_published = True).order_by('-id')
+class ReceitaListViewBase(ListView):
+    model = Receitas
+    context_object_name = 'receitas'
+    ordering = '-id'
+    template_name = 'receitas/pages/home.html'
 
-    obj,pagination_range = make_pagination(request,receitas,PER_PAGE)
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs.filter(
+            is_published=True
+        )
+        return qs
 
-    return render(request,'receitas/pages/home.html',context={
-        'receitas':obj,
-        'pagination_range': pagination_range,
-    })
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        obj, pagination_range = make_pagination(self.request, self.get_queryset(), PER_PAGE)
+        context.update({
+            'receitas': obj,
+            'pagination_range': pagination_range
+        })
+        return context
+
+
+class ReceitaListViewHome(ReceitaListViewBase):
+    model = Receitas
+    context_object_name = 'receitas'
+    ordering = '-id'
+    template_name = 'receitas/pages/home.html'
+
 
 def category(request,category_id):
-    
+
     receitas = get_list_or_404(Receitas.objects.filter(category__id = category_id, is_published = True).order_by('-id'))
 
     obj,pagination_range = make_pagination(request,receitas,PER_PAGE)
@@ -31,7 +52,7 @@ def category(request,category_id):
     })
 
 def receita(request,id):
-    
+
     receita = get_object_or_404(Receitas,is_published = True, pk = id)
 
     return render(request,'receitas/pages/receita-view.html',context={
@@ -40,13 +61,13 @@ def receita(request,id):
     })
 
 def search(request):
-   
+
     search_term = request.GET.get('search','').strip()
 
     if not search_term:
         raise Http404()
 
-    
+
     receitas = Receitas.objects.filter(
         Q(Q(title__icontains=search_term) |
         Q(description__icontains=search_term)
