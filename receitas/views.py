@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.http import Http404
 from django.shortcuts import render , get_list_or_404 , get_object_or_404
 from .models import Receitas
@@ -63,14 +63,26 @@ class ReceitaListViewCategory(ReceitaListViewBase):
         return context
 
 
-def receita(request,id):
+class ReceitaDetailViewReceita(DetailView):
+    model = Receitas
+    context_object_name = 'receita'
+    template_name = 'receitas/pages/receita-view.html'
 
-    receita = get_object_or_404(Receitas,is_published = True, pk = id)
+    def get_object(self, *args, **kwargs):
+        obj = get_object_or_404(
+            Receitas.objects.all(),
+            is_published=True,
+            id=self.kwargs.get('id')
+        )
+        return obj
 
-    return render(request,'receitas/pages/receita-view.html',context={
-        'receita': receita,
-        'is_detail_page': True,
-    })
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'is_detail_page': True
+        })
+        return context
+
 
 def search(request):
 
