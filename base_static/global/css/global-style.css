@@ -56,6 +56,7 @@
 
  body{
     /*1.6 rem = 16px*/
+    position: relative;
     font-size: 1.6rem;
     font-family: var(--font-primary);
     background-color: var(--color-gray-1);
@@ -251,23 +252,24 @@
  }
 
  .preparation-steps{
-    padding: var(--spacing-gutter-medium);
-    color: #000;
+   padding: var(--spacing-gutter-medium);
+   color: #000;
  }
 
  .main-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--color-primary-dark);
-    color: var(--color-white);
-    padding: var(--spacing-gutter-large);
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background: var(--color-primary-dark);
+   color: var(--color-white);
+   padding: var(--spacing-gutter-large);
  }
 
  .main-footer a {
-    color: var(--color-white);
-    text-decoration: none;
-    transition: all 300ms ease-in-out;
+   color: var(--color-white);
+   text-decoration: none;
+   transition: all 300ms ease-in-out;
  }
 
  .main-footer a:hover {
@@ -283,15 +285,26 @@
 
  /* Form */
 
+.span-2{
+   grid-column: span 2;
+}
+
 .form-content{
     margin: 0px auto;
     max-width: 640px;
+}
+
+.form-content input,
+.form-content textarea,
+.form-content select{
+   width: 100%;
 }
 
 .form-content-grid{
     display: grid;
     grid-template-columns: auto auto;
     row-gap: 10px;
+    column-gap: 10px;
     margin-bottom: 20px;
 }
 
@@ -300,8 +313,9 @@
    font-weight: bold;
 }
 
-.form-content-grid input{
-   font-size: 20px;
+.form-content-grid input,
+.form-content-grid select{
+   font-size: 18px;
    border: 1px solid black;
    border-radius: 4px;
    padding: 5px 10px;
@@ -318,13 +332,14 @@
    font-size: 20px;
    padding: 5px 10px;
    position: relative;
-   border: 1px solid rgb(124, 124, 124);
+   border: none;
+   color: white;
    border-radius: 4px;
+   background-color: #13141f;
 }
 
 .form-content button:active{
    top: 2px;
-   border-color: #000;
 }
 
 .errorlist{
@@ -333,6 +348,7 @@
    color: red;
 }
 
+/* Message */
 
 .message{
    margin: 0px auto;
@@ -394,3 +410,96 @@
    color: #269fe6;
    font-weight: bold;
 }
+
+.login-infos {
+   padding: 5px 0px 5px 0px;
+}
+
+.login-infos-link{
+   text-decoration: none;
+   color: #269fe6;
+}
+
+.login-link{
+   text-decoration: none;
+   color: #269fe6;
+}
+
+/* Login message*/
+
+.login-message{
+   margin-top: 10px;
+}
+
+.inline-form{
+   display: inline;
+   background-color: none;
+}
+
+.inline-form button{
+   background-color:#e0e0e0;
+}
+
+.inline-form button,
+.dashboard-link,
+.login-message a{
+   text-decoration: none;
+   border: none;
+   background-color: none;
+   color: #269fe6;
+   cursor: pointer;
+   font-size: 16px;
+}
+
+.login-message a:hover,
+.inline-form button{
+   color: #2086c2;
+}
+
+/* Dashboard main container */
+
+.dashboard-main-container{
+   max-width: 650px;
+   margin: 0 auto;
+}
+
+.dashboard-main-container ul,
+.dashboard-main-container li,
+.dashboard-main-container ul
+{
+   margin-top: 10px;
+   margin-bottom: 10px;
+   list-style: none;
+}
+
+ul a{
+   text-decoration: none;
+   color: #269fe6;
+}
+
+ul a:hover{
+   color: #2086c2;
+}
+
+
+.dashboard-main-container form{
+   display: inline;
+}
+
+.fa-circle-xmark{
+   color: #269fe6;
+   font-size: 20px;
+}
+
+.fa-circle-xmark:hover{
+   color: #2086c2;
+}
+
+.dashboard-main-container button{
+   background-color: #e0e0e0;
+   border: none;
+   cursor: pointer;
+}
+
+
+
