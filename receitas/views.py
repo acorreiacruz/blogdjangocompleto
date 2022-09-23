@@ -7,6 +7,7 @@ from django.db.models import Q
 from utils.pagination import make_pagination
 import os
 
+
 PER_PAGE = int(os.environ.get('PER_PAGE',4))
 
 
@@ -21,6 +22,7 @@ class ReceitaListViewBase(ListView):
         qs = qs.filter(
             is_published=True
         )
+        qs = qs.select_related('category', 'author')
         return qs
 
     def get_context_data(self, *args, **kwargs):
