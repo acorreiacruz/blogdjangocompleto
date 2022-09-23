@@ -1,5 +1,5 @@
-from multiprocessing import context
 from django.views.generic import ListView, DetailView
+from django.views import View
 from django.http import Http404
 from django.shortcuts import render , get_list_or_404 , get_object_or_404
 from .models import Receitas
@@ -13,7 +13,7 @@ PER_PAGE = int(os.environ.get('PER_PAGE',4))
 class ReceitaListViewBase(ListView):
     model = Receitas
     context_object_name = 'receitas'
-    ordering = '-id'
+    ordering = ['-id']
     template_name = 'receitas/pages/home.html'
 
     def get_queryset(self, *args, **kwargs):
@@ -36,14 +36,12 @@ class ReceitaListViewBase(ListView):
 class ReceitaListViewHome(ReceitaListViewBase):
     model = Receitas
     context_object_name = 'receitas'
-    ordering = '-id'
     template_name = 'receitas/pages/home.html'
 
 
 class ReceitaListViewCategory(ReceitaListViewBase):
     model = Receitas
     context_object_name = 'receitas'
-    ordering = '-id'
     template_name = 'receitas/pages/category.html'
 
     def get_queryset(self, *args, **kwargs):
@@ -84,27 +82,36 @@ class ReceitaDetailViewReceita(DetailView):
         return context
 
 
-def search(request):
+class ReceitaListViewSearch(ReceitaListViewBase):
+    model = Receitas
+    context_object_name = 'receitas'
+    template_name = 'receitas/pages/search.html'
 
-    search_term = request.GET.get('search','').strip()
+    def get_search_term(self):
+        search_term = self.request.GET.get('search','').strip()
+        if not search_term:
+            raise Http404()
+        return search_term
 
-    if not search_term:
-        raise Http404()
+    def get_queryset(self, *args, **kwargs):
+        search_term = self.get_search_term()
 
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
+            Q(Q(title__icontains=search_term) |
+            Q(description__icontains=search_term)
+            ),
+            is_published=True
+        ).order_by("-id")
 
-    receitas = Receitas.objects.filter(
-        Q(Q(title__icontains=search_term) |
-        Q(description__icontains=search_term)
-        ),
-        is_published=True
-    ).order_by("-id")
+        return qs
 
-    obj,pagination_range = make_pagination(request,receitas,PER_PAGE)
-
-    return render(request,'receitas/pages/search.html',context={
-        'search_title': f'Searching for "{search_term}"',
-        'search_term':search_term,
-        'receitas': obj,
-        'pagination_range': pagination_range,
-        'aditional': f'&search={search_term}',
-    })
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_term = self.get_search_term()
+        context.update({
+            'search_title': f'Searching for "{search_term}"',
+            'search_term':search_term,
+            'aditional': f'&search={search_term}'
+        })
+        return context
