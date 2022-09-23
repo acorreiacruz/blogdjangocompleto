@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.views.generic import ListView
 from django.http import Http404
 from django.shortcuts import render , get_list_or_404 , get_object_or_404
@@ -17,7 +18,7 @@ class ReceitaListViewBase(ListView):
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
-        qs.filter(
+        qs = qs.filter(
             is_published=True
         )
         return qs
@@ -39,17 +40,28 @@ class ReceitaListViewHome(ReceitaListViewBase):
     template_name = 'receitas/pages/home.html'
 
 
-def category(request,category_id):
+class ReceitaListViewCategory(ReceitaListViewBase):
+    model = Receitas
+    context_object_name = 'receitas'
+    ordering = '-id'
+    template_name = 'receitas/pages/category.html'
 
-    receitas = get_list_or_404(Receitas.objects.filter(category__id = category_id, is_published = True).order_by('-id'))
+    def get_queryset(self, *args, **kwargs):
+        receitas = get_list_or_404(
+            Receitas.objects.all(),
+            is_published=True,
+            category__id=self.kwargs.get('category_id')
+        )
+        return receitas
 
-    obj,pagination_range = make_pagination(request,receitas,PER_PAGE)
+    def get_context_data(self, *args, **kwargs):
+        first = self.get_queryset()[0]
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'title': f'{first.category.name} - Category'
+        })
+        return context
 
-    return render(request,'receitas/pages/category.html',context={
-        'receitas':obj,
-        'pagination_range': pagination_range,
-        'title': f"{receitas[0].category.name} - Category"
-    })
 
 def receita(request,id):
 
