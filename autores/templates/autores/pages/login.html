@@ -1,0 +1,14 @@
+{% extends 'global/base.html' %}
+
+{% block title %}Login | {% endblock title %}
+
+{% block content %}
+    <div class="main-content center container">
+        <h2>Login</h2>
+        <div class="login-infos">
+            Caso não tenha uma conta, <a class="login-infos-link" href="{% url 'autores:register' %}">clique aqui</a> para criá-la.
+        </div>
+        {% include 'autores/partials/login_message.html' %}
+    </div>
+    {% include 'autores/partials/form.html' %}
+{% endblock content %}
