@@ -97,23 +97,3 @@ def dashboard(request):
     return render(request, 'autores/pages/dashboard.html', context={
         'receitas': receitas
     })
-
-
-@login_required(login_url='autores:login', redirect_field_name='next')
-def dashboard_delete_recipe(request):
-
-    if request.method != 'POST':
-        return Http404()
-
-    id = request.POST.get("id")
-
-    receita = get_object_or_404(
-        Receitas.objects,
-        id=id,
-        author=request.user,
-        is_published=False
-    )
-
-    receita.delete()
-    messages.success(request, 'Receita excluída com sucesso !')
-    return redirect('autores:dashboard')
