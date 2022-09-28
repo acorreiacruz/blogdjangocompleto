@@ -3,7 +3,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from django.contrib.auth.models import User
-from api.serializers import ReceitasSerializer, UserSerializer, CategoriaSerializer
+from api.serializers import ReceitasSerializer, UserSerializer
 from receitas.models import Receitas
 from rest_framework.pagination import PageNumberPagination
 from api.permissions import EhDono
