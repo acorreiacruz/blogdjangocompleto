@@ -33,11 +33,7 @@ class HomeViewTest(ReceitasTestBase):
         self.assertIn("<h1>There is no recipe pusblished yet !</h1>",response.content.decode('utf-8'))
 
     def test_receita_home_is_paginated(self):
-        # Criando as receitas  para as paginações , 6 por página
-        for i in range(18):
-            kwargs = {'slug':f'slug-receita-{i}','author-data':{'username':f'u{i}'}}
-            self.make_receita(**kwargs)
-            response = self.client.get(reverse('receitas:home'))
-            paginator_obj = response.context.get('receitas').paginator
-
-            self.assertEquals(3,paginator_obj.num_pages)
+        self.make_recipe_set(18)
+        response = self.client.get(reverse('receitas:home'))
+        paginator_obj = response.context.get('receitas').paginator
+        self.assertEqual(3,paginator_obj.num_pages)

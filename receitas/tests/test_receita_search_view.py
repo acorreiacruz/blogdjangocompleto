@@ -6,7 +6,7 @@ class SearchViewTest(ReceitasTestBase):
 
     def test_receita_search_url_is_correct(self):
         url = reverse('receitas:search')
-        self.assertEquals(url,'/receitas/search/')
+        self.assertEqual(url,'/receitas/search/')
 
     def test_receita_search_view_function_is_correct(self):
         resolver_object = resolve(reverse('receitas:search'))
@@ -18,12 +18,12 @@ class SearchViewTest(ReceitasTestBase):
 
     def test_receita_search_view_return_satus_code_200_ok(self):
         response = self.client.get(reverse('receitas:search')+'?search=teste')
-        self.assertEquals(response.status_code,200)
+        self.assertEqual(response.status_code,200)
 
     def test_receita_search_retuns_404_if_no_input(self):
         url = f"{reverse('receitas:search')}"
         response = self.client.get(url)
-        self.assertEquals(response.status_code,404)
+        self.assertEqual(response.status_code,404)
 
     def test_receita_search_view_if_input_will_be_escaped(self):
         url = f"{reverse('receitas:search')}?search=teste"
@@ -53,13 +53,13 @@ class SearchViewTest(ReceitasTestBase):
         response_both = self.client.get(f'{url}?search=esta')
 
         # Receita é passa para a view pelo context, esse é acessado no response pelo context, logo retorna uma QueryDict
-        self.assertIn(receita1,response1.context.get('receitas'))
-        self.assertIn(receita2,response2.context.get('receitas'))
+        self.assertIn(receita1.title,response1.content.decode('utf-8'))
+        self.assertIn(receita2.title,response2.content.decode('utf-8'))
 
-        self.assertNotIn(receita1,response2.context.get('receitas'))
-        self.assertNotIn(receita2,response1.context.get('receitas'))
+        self.assertNotIn(receita1.title,response2.content.decode('utf-8'))
+        self.assertNotIn(receita2.title,response1.content.decode('utf-8'))
 
-        self.assertIn(response1,response_both.context.get('receitas'))
-        self.assertIn(response2,response_both.context.get('receitas'))
+        self.assertIn(receita1.title,response_both.content.decode('utf-8'))
+        self.assertIn(receita2.title,response_both.content.decode('utf-8'))
 
 
