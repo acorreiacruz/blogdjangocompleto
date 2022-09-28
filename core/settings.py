@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from django.contrib.messages import constants
 from dotenv import load_dotenv
+from datetime import timedelta
 import mimetypes
 
 load_dotenv()
@@ -37,9 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Apps terceiros
     'debug_toolbar',
+    'rest_framework',
+    'rest_framework_simplejwt',
     # Meus apps
     'receitas',
     'autores',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -144,5 +148,26 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+# Rest Framework configuration
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERERS_CLASSES':[
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
+# Simple JSON Web Token configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'SIGNING_KEY': os.environ.get('SECRET_KEY'),
+    'AUTH_HEADER_TYPES': ('Bearer',)
+}
 
 
