@@ -7,7 +7,7 @@ from api.serializers import ReceitasSerializer, UserSerializer
 from receitas.models import Receitas
 from rest_framework.pagination import PageNumberPagination
 from api.permissions import EhDono
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.decorators import action
 
 
@@ -19,11 +19,11 @@ class ReceitaModelViewSet(ModelViewSet):
     queryset = Receitas.objects.all()
     serializer_class = ReceitasSerializer
     pagination_class = PaginacaoCustomizada
-    permission_classes = [IsAuthenticated, EhDono]
+    permission_classes = [IsAuthenticatedOrReadOnly,]
     http_method_names = ['get', 'post', 'patch', 'delete', 'options']
 
     def get_permissions(self, *args, **kwargs):
-        if self.request.method in ['patch', 'delete']:
+        if self.request.method in ['PATCH', 'DELETE']:
             return [EhDono(),]
         return super().get_permissions(*args, **kwargs)
 
@@ -37,7 +37,7 @@ class ReceitaModelViewSet(ModelViewSet):
         return obj
 
     def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
+        qs = super().get_queryset(*args, **kwargs).order_by('-id')
         categoria = self.request.query_params.get('categoria', '')
         if categoria:
             qs = qs.filter(category=categoria)
