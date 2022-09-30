@@ -1,5 +1,16 @@
 from django.contrib import admin
 from .models import Category, Receitas
+from django.contrib.auth.models import User
+
+
+admin.site.unregister(User)
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'first_name', 'last_name', 'username', 'email')
+    list_display_links = ('id', 'username')
+    search_fields = 'username',
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -18,4 +29,3 @@ class ReceitasAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('title',)
     }
-
