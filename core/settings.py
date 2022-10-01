@@ -1,11 +1,9 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants
-from dotenv import load_dotenv
 from datetime import timedelta
 import mimetypes
 
-load_dotenv()
 
 # Solving the problem of not showing Django Debug Toolbar
 mimetypes.add_type("application/javascript", ".js", True)
