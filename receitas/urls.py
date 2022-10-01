@@ -11,6 +11,11 @@ urlpatterns = [
         name='search'
     ),
     path(
+        'receitas/tags/<slug:slug>/',
+        views.ReceitaListViewTag.as_view(),
+        name='tags'
+    ),
+    path(
         'receitas/category/<int:category_id>/',
         views.ReceitaListViewCategory.as_view(),
         name='category'
