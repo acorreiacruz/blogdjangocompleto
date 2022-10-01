@@ -3,6 +3,7 @@ from django.views import View
 from django.http import Http404
 from django.shortcuts import render , get_list_or_404 , get_object_or_404
 from .models import Receitas
+from tag.models import Tag
 from django.db.models import Q
 from utils.pagination import make_pagination
 import os
@@ -23,6 +24,7 @@ class ReceitaListViewBase(ListView):
             is_published=True
         )
         qs = qs.select_related('category', 'author')
+        qs = qs.prefetch_related('tags')
         return qs
 
     def get_context_data(self, *args, **kwargs):
@@ -36,14 +38,10 @@ class ReceitaListViewBase(ListView):
 
 
 class ReceitaListViewHome(ReceitaListViewBase):
-    model = Receitas
-    context_object_name = 'receitas'
     template_name = 'receitas/pages/home.html'
 
 
 class ReceitaListViewCategory(ReceitaListViewBase):
-    model = Receitas
-    context_object_name = 'receitas'
     template_name = 'receitas/pages/category.html'
 
     def get_queryset(self, *args, **kwargs):
@@ -64,7 +62,6 @@ class ReceitaListViewCategory(ReceitaListViewBase):
 
 
 class ReceitaDetailViewReceita(DetailView):
-    model = Receitas
     context_object_name = 'receita'
     template_name = 'receitas/pages/receita-view.html'
 
@@ -85,8 +82,6 @@ class ReceitaDetailViewReceita(DetailView):
 
 
 class ReceitaListViewSearch(ReceitaListViewBase):
-    model = Receitas
-    context_object_name = 'receitas'
     template_name = 'receitas/pages/search.html'
 
     def get_search_term(self):
@@ -115,5 +110,33 @@ class ReceitaListViewSearch(ReceitaListViewBase):
             'search_title': f'Searching for "{search_term}"',
             'search_term':search_term,
             'aditional': f'&search={search_term}'
+        })
+        return context
+
+
+class ReceitaListViewTag(ReceitaListViewBase):
+    template_name = 'receitas/pages/tag.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
+            tags__slug=self.kwargs.get('slug')
+        ).order_by("-id")
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page_title = Tag.objects.get(
+            slug=self.kwargs.get('slug', '')
+        )
+
+        if not page_title:
+            page_title = "Nehuma tag encontrada !"
+
+        page_title = f'{page_title} - Tag |'
+
+        context.update({
+            'page_title': f'{page_title}'
         })
         return context
