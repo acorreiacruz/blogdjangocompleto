@@ -11,16 +11,6 @@ class TagInline(GenericStackedInline):
     extra = 1
 
 
-
-admin.site.unregister(User)
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'username', 'email')
-    list_display_links = ('id', 'username')
-    search_fields = 'username',
-
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
