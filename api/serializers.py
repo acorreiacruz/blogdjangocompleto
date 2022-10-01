@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from receitas.models import Receitas, Category
+from tag.models import Tag
 from django.contrib.auth.models import User
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'name', 'slug']
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -25,3 +31,4 @@ class ReceitasSerializer(serializers.ModelSerializer):
         ]
     category = CategoriaSerializer(read_only=True)
     author = UserSerializer(read_only=True)
+    tags = TagSerializer(read_only=True)
