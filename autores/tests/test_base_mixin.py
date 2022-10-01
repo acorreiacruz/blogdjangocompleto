@@ -10,7 +10,8 @@ class TestBaseMixin(TestCase):
     def get_response(self, name, method='get', data=None, follow=True, **kwargs):
         if method == 'get':
             response = self.client.get(
-                self.get_url(name, **kwargs)
+                self.get_url(name, **kwargs),
+                follow=follow
             )
 
         if method == 'post':
