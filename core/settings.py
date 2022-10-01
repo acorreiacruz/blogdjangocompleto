@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'receitas',
     'autores',
     'api',
+    'tag',
 ]
 
 MIDDLEWARE = [
