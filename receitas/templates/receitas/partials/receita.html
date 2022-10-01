@@ -1,7 +1,4 @@
 <div class="receita-list-item receita">
-{% comment %}
-    Lembrando que quando uma imagem de um site é clicada ele deve ser aberta , ela deve ser servida, é ai que entra a função settings lá do urls do projeto, ela retorna um padrão de url para servir arquivos quando no modo DEBUG. Logo o receita.cover.url é essa url
-{% endcomment %}
     {% if receita.cover %}
         <div class="receita-cover">
             <a href="{% url 'receitas:receita' receita.id %}">
@@ -24,7 +21,7 @@
             <span class="receita-author-item">
                 <i class="fas fa-user"></i>
                 {% if receita.author.first_name %}
-                    {{ receita.author.first_name }} 
+                    {{ receita.author.first_name }}
                 {% else %}
                 {{ receita.author.last_name }}
                 {% endif %}
@@ -80,15 +77,16 @@
             {% if receita.preparation_step_is_html %}
                 {{ receita.preparation_step | safe }}
             {% else %}
-                    {{ receita.preparation_step }}
+                    {{ receita.preparation_step | linebreaksbr}}
+            {% endif %}
+            {% if receita.tags.all %}
+                <p>
+                    Tags:
+                    {% for tag in receita.tags.all %}
+                        <a href="{% url 'receitas:tags' tag.slug %}">{{ tag.name }}, </a>
+                    {% endfor %}
+                </p>
             {% endif %}
         </div>
     {% endif %}
-{% comment %}
- O filtro safe diz pro Django que o dono do site está garantindo que o html passado ali para carregar é seguro. Ou seja , que o adiministrador verificou isso     
-{% endcomment %}
 </div>
-
-{% comment %}
-    O último if aqui nessa página é para testar se a flag é True, logo é a página de detalhes da receita e não vai precisar mostrar o botão ver mais. Logo se is_detail_page não for True , você carrega o botão ver mais caso não seja ele some, e aparece os elementos da página de detalhes
-{% endcomment %}
