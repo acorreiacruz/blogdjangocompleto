@@ -501,5 +501,85 @@ ul a:hover{
    cursor: pointer;
 }
 
+/* Button nav-bar*/
+.button-show-menu{
+   position: fixed;
+   top: 25px;
+   left: 260px;
+   color: white;
+   background-color: #269fe6;
+   border: none;
+   padding: 5px;
+   z-index: 1;
+   font-size: 20px;
+   border-radius: 0px 4px 4px 0px;
+   cursor: pointer;
+   visibility: hidden;
+   opacity: 0;
+}
 
+.button-show-menu-visible{
+   left: 5px;
+   opacity: 1;
+   visibility: visible;
+}
 
+.text-hidden{
+   display: none;
+}
+
+.menu-container{
+   position: fixed;
+   top: 0px;
+   left: 0px;
+   height: 100vh;
+   width: 260px;
+   background-color: #269fe6;
+   z-index: 2;
+   overflow-y: auto;
+}
+
+.menu-hidden{
+   left: -255px;
+}
+
+.button-close-menu{
+   color: white;
+   position: absolute;
+   right: 10px;
+   top: 10px;
+   background-color: rgba(255, 255, 255, 0);
+   border: none;
+   cursor: pointer;
+   font-size: 20px;
+   z-index: 3;
+}
+
+.button-close-menu .fa-circle-xmark{
+   color: white;
+}
+
+/* .button-close-menu-visible{
+
+} */
+
+.menu-nav{
+   width: 100%;
+   display: flex;
+   flex-flow: column wrap;
+   font-family: var(--font-headings);
+}
+
+.menu-nav a {
+   display: block;
+   width: 100%;
+   padding: 10px;
+   text-decoration: none;
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+}
+
+.menu-nav a:hover{
+   background-color: #2086c2;
+}
