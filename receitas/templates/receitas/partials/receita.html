@@ -19,11 +19,18 @@
 
         {% if receita.author is not None %}
             <span class="receita-author-item">
+                {% if receita.author.profile %}
+                    <a href="{% url 'autores:profile' receita.author.profile.id %}">
+                {% endif %}
+
                 <i class="fas fa-user"></i>
                 {% if receita.author.first_name %}
-                    {{ receita.author.first_name }}
+                    {{ receita.author.first_name }} {{ receita.author.last_name }}
                 {% else %}
-                {{ receita.author.last_name }}
+                    {{ receita.author.username }}
+                {% endif %}
+                {% if receita.author.profile %}
+                    </a>
                 {% endif %}
             </span>
         {% else %}
