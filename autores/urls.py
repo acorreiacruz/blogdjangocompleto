@@ -28,7 +28,7 @@ urlpatterns = [
     ),
     path(
         'profile/<int:pk>/',
-        views.ProfileView.as_view(),
+        views.ProfileTemplateView.as_view(),
         name='profile'
     )
 ]
