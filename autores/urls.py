@@ -26,5 +26,9 @@ urlpatterns = [
         views.DashboardEditCreateRecipe.as_view(),
         name='dashboard_edit_recipe'
     ),
-
+    path(
+        'profile/<int:pk>/',
+        views.ProfileView.as_view(),
+        name='profile'
+    )
 ]
