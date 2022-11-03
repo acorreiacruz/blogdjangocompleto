@@ -1,7 +1,6 @@
 from django.views.generic import ListView, DetailView
-from django.views import View
 from django.http import Http404
-from django.shortcuts import render , get_list_or_404 , get_object_or_404
+from django.shortcuts import get_list_or_404 , get_object_or_404
 from .models import Receitas
 from tag.models import Tag
 from django.db.models import Q
